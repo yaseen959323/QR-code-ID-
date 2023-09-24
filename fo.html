@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Card with Black QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #card {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Business Card with Black QR Code</h1>
+        <form id="info-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            
+            <label for="title">Title:</label>
+            <input type="text" id="title" required>
+            
+            <label for="email">Email:</label>
+            <input type="text" id="email" required>
+            
+            <button type="button" onclick="generateCardAndQRCode()">Generate Business Card & QR Code</button>
+        </form>
+        <div id="card" style="display: none;">
+            <h2 id="card-name"></h2>
+            <p id="card-title"></p>
+            <p id="card-email"></p>
+        </div>
+        <canvas id="qrcode" style="display: none;"></canvas>
+    </div>
+
+    <script src="qrious.min.js"></script> <!-- Include the qrious library -->
+    <script>
+        function generateCardAndQRCode() {
+            const name = document.getElementById('name').value;
+            const title = document.getElementById('title').value;
+            const email = document.getElementById('email').value;
+
+            // Update the business card
+            const cardName = document.getElementById('card-name');
+            const cardTitle = document.getElementById('card-title');
+            const cardEmail = document.getElementById('card-email');
+
+            cardName.textContent = `Name: ${name}`;
+            cardTitle.textContent = `Title: ${title}`;
+            cardEmail.textContent = `Email: ${email}`;
+
+            // Generate the QR code with a black foreground color
+            const qrCode = new QRious({
+                element: document.getElementById('qrcode'),
+                value: `Name: ${name}\nTitle: ${title}\nEmail: ${email}`,
+                size: 200,
+                foreground: 'black', // Set the foreground color to black
+                background: 'white', // Background color of the QR code
+            });
+
+            // Show the card and QR code
+            document.getElementById('card').style.display = 'block';
+            document.getElementById('qrcode').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
